@@ -20,6 +20,7 @@ import com.google.android.gms.ads.reward.RewardItem
 import com.google.android.gms.ads.reward.RewardedVideoAd
 import com.google.android.gms.ads.reward.RewardedVideoAdListener
 import com.google.firebase.analytics.FirebaseAnalytics
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity(), SensorEventListener, RewardedVideoAdListener {
@@ -28,11 +29,8 @@ class MainActivity : AppCompatActivity(), SensorEventListener, RewardedVideoAdLi
     private var mMagnetSensor: Sensor? = null
     private var mAccelSensor: Sensor? = null
     private var compass: Bitmap? = null
-    private var compassView: ImageView? = null
-    private var degreesTextView: TextView? = null
     private var gravity: FloatArray = FloatArray(3)
     private var geoMagnetic: FloatArray = FloatArray(3)
-    private lateinit var levelImageView: ImageView
 
     private var adConsumed = false
     private lateinit var mRewardedVideoAd: RewardedVideoAd
@@ -45,7 +43,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener, RewardedVideoAdLi
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         val bundle = Bundle()
-        bundle.putString("test_string", findViewById<TextView>(R.id.degreeTextView).text.toString())
+        bundle.putString("test_string", degreeTextView.text.toString())
         mFirebaseAnalytics.logEvent("test_event", bundle)
 
         MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713")
@@ -58,60 +56,40 @@ class MainActivity : AppCompatActivity(), SensorEventListener, RewardedVideoAdLi
         mMagnetSensor = mSensorManager!!.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)
         mAccelSensor = mSensorManager!!.getDefaultSensor(Sensor.TYPE_GRAVITY)
 
-        findViewById<Button>(R.id.levelButton).setOnClickListener {
+        levelButton.setOnClickListener {
             if (mRewardedVideoAd.isLoaded) { mRewardedVideoAd.show() }
         }
 
-        levelImageView = findViewById(R.id.levelImageView)
-        degreesTextView = findViewById(R.id.degreeTextView)
-        compassView = findViewById(R.id.compassView)
         compassView?.setImageBitmap(compass as Bitmap)
         Thread {
             while(true) {
                 Thread.sleep(1000)
                 val bundle = Bundle()
-                bundle.putString("direction", findViewById<TextView>(R.id.degreeTextView).text.toString())
+                bundle.putString("direction", degreeTextView.text.toString())
                 mFirebaseAnalytics.logEvent(FirebaseAnalytics.Event.EARN_VIRTUAL_CURRENCY, bundle)
             }
         }.start()
     }
 
     override fun onRewarded(reward: RewardItem) {
-        Toast.makeText(this, "onRewarded! currency: ${reward.type} amount: ${reward.amount}",
-            Toast.LENGTH_SHORT).show()
-
         adConsumed = true
-        findViewById<Button>(R.id.levelButton).visibility = View.INVISIBLE
+        levelButton.visibility = View.INVISIBLE
         levelImageView.visibility = View.VISIBLE
     }
 
-    override fun onRewardedVideoAdLeftApplication() {
-        //Toast.makeText(this, "onRewardedVideoAdLeftApplication", Toast.LENGTH_SHORT).show()
-    }
+    override fun onRewardedVideoAdLeftApplication() {}
 
-    override fun onRewardedVideoAdClosed() {
-        //Toast.makeText(this, "onRewardedVideoAdClosed", Toast.LENGTH_SHORT).show()
-    }
+    override fun onRewardedVideoAdClosed() {}
 
-    override fun onRewardedVideoAdFailedToLoad(errorCode: Int) {
-        //Toast.makeText(this, "onRewardedVideoAdFailedToLoad", Toast.LENGTH_SHORT).show()
-    }
+    override fun onRewardedVideoAdFailedToLoad(errorCode: Int) {}
 
-    override fun onRewardedVideoAdLoaded() {
-        //Toast.makeText(this, "onRewardedVideoAdLoaded", Toast.LENGTH_SHORT).show()
-    }
+    override fun onRewardedVideoAdLoaded() {}
 
-    override fun onRewardedVideoAdOpened() {
-        //Toast.makeText(this, "onRewardedVideoAdOpened", Toast.LENGTH_SHORT).show()
-    }
+    override fun onRewardedVideoAdOpened() {}
 
-    override fun onRewardedVideoStarted() {
-        //Toast.makeText(this, "onRewardedVideoStarted", Toast.LENGTH_SHORT).show()
-    }
+    override fun onRewardedVideoStarted() {}
 
-    override fun onRewardedVideoCompleted() {
-        //Toast.makeText(this, "onRewardedVideoCompleted", Toast.LENGTH_SHORT).show()
-    }
+    override fun onRewardedVideoCompleted() {}
 
     override fun onSensorChanged(event: SensorEvent?) {
         if (event != null) {
@@ -152,7 +130,7 @@ class MainActivity : AppCompatActivity(), SensorEventListener, RewardedVideoAdLi
                     }
 
                     compassView?.rotation = degrees.toFloat()
-                    degreesTextView?.text = "${textDegrees.toInt()}"
+                    degreeTextView.text = "${textDegrees.toInt()}"
 
                     if (adConsumed) {
                         val len = 40
