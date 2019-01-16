@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "562014253395",
+    "firebase_url": "https://kompath-ef693.firebaseio.com",
+    "project_id": "kompath-ef693",
+    "storage_bucket": "kompath-ef693.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:562014253395:android:dc1371d45301d917",
+        "android_client_info": {
+          "package_name": "com.vd.kirpa.kompath"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "562014253395-21ic1hbdmhq8qe9amdcolukmr56asb59.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vd.kirpa.kompath",
+            "certificate_hash": "e32a0bce5472272f639edd3a3e0a1024012b86b0"
+          }
+        },
+        {
+          "client_id": "562014253395-8vp0mpi49c5m2jibi2tkdd60a0s1654f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvtKSZe1EviqlTvobK2wq2lYKahVbTDOQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "562014253395-8vp0mpi49c5m2jibi2tkdd60a0s1654f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
